@@ -92,12 +92,52 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+
+    def find_value(self):
+        # to swap item for robot to hold nothing in the list in case its holding something
+        self.swap_item()
+       # while the robot can move right
+        while self.can_move_right():
+            # with the compared item, its greater or equal value
+            if self.compare_item() == 0 or 1:
+                # swap for that item
+                self.swap_item() # this means we wil have the least valuable item
+            self.move_right # contine to move right
+        # keep going righ to look for the least valuable item 
+        if self.compare_item() == 0 or 1:
+            # and swap for it
+            self.swap_item()
+
+    def place_value(self):
+        # move the robot the start
+        while self.can_move_left():
+            self.move_left()
+        # if the robot's light is not on, do nothing
+        while not self.light_is_on() == None:
+            # since we have nothing in the hand, place least valuable item first
+            if self.compare_item() == None:
+                # and swap it with nothing if nothing is there
+               self.swap_item()
+                # turn on the light
+               self.set_light_on()
+            # continue moving right to place items in valuable order
+            self.move_right()
+        
+
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # if the robot is on
+        self.set_light_on()
+        # as robot move towards the end on the list
+        while self.can_move_right():
+            # find the least value
+            self.find_value()
+            # then placing that value on the list
+            self.place_value()
+            # this will continue to loop until list is sorted
+    
 
 
 if __name__ == "__main__":
