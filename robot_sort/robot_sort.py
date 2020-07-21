@@ -91,53 +91,55 @@ class SortingRobot:
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
-
-
-    def find_value(self):
-        # to swap item for robot to hold nothing in the list in case its holding something
-        self.swap_item()
-       # while the robot can move right
-        while self.can_move_right():
-            # with the compared item, its greater or equal value
-            if self.compare_item() == 0 or 1:
-                # swap for that item
-                self.swap_item() # this means we wil have the least valuable item
-            self.move_right # contine to move right
-        # keep going righ to look for the least valuable item 
-        if self.compare_item() == 0 or 1:
-            # and swap for it
-            self.swap_item()
-
-    def place_value(self):
-        # move the robot the start
-        while self.can_move_left():
-            self.move_left()
-        # if the robot's light is not on, do nothing
-        while not self.light_is_on() == None:
-            # since we have nothing in the hand, place least valuable item first
-            if self.compare_item() == None:
-                # and swap it with nothing if nothing is there
-               self.swap_item()
-                # turn on the light
-               self.set_light_on()
-            # continue moving right to place items in valuable order
-            self.move_right()
         
 
     def sort(self):
         """
         Sort the robot's list.
         """
-        # if the robot is on
+        # turning lights on is for the while loop to begin
+        # can use bubble sort 
+        # this will keep looping either two direction the robot goes, left or right
+        # is comparing two items.
+        # moving right, robot starts with nothing in hand to compare to greater value since 
+        # less value should begin with less, ascending its order going right
+        # moving left, robot starts with an item and comparing to item if its lesser value. The 
+        # greater item will be dropped, and order will descend. 
+
+        # setting the light on for while loop to start
         self.set_light_on()
-        # as robot move towards the end on the list
-        while self.can_move_right():
-            # find the least value
-            self.find_value()
-            # then placing that value on the list
-            self.place_value()
-            # this will continue to loop until list is sorted
-    
+        while self.light_is_on():
+            # but needs to turn off so robot can start moving
+            self.set_light_off()
+
+            # When the robot does moves right
+            while self.can_move_right():
+                self.move_right()
+                # it will compare item to the right its has a greater value which equals to 1
+                if self.compare_item() == 1:
+                    # if so, then swap it, dropping the lesser item down
+                    self.swap_item()
+                    # light is back for while to start
+                    self.set_light_on()
+           
+            # this for when the robot does move left
+            while self.can_move_left():
+                # pick up the item to compare to something of lesser value
+                self.swap_item()
+                # move to the left
+                self.move_left()
+                # and compare if the item is lesser value which equals to -1
+                if self.compare_item() == -1:
+                    # if it is, it'll swap, dropping the greater value item as it continues left
+                    self.swap_item()
+                    # light will turn back and it'll begin while loop again
+                    self.set_light_on()
+
+                # if not left, then it'll just go to the right and swap and go left
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+ 
 
 
 if __name__ == "__main__":
