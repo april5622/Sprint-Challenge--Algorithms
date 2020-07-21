@@ -5,7 +5,7 @@
 a) 0(n) since a = 1 would just be 0(1). But in a while loop, it appears there are 3n which is linear.
 
 
-b) 0(n^2) since it appears that there are like two loops. One loop is nested within another. sum = 0 is a 0(n) as sum += i and j *= 2. The for and while loops are 0(n) and 0(n) and multiplying them togther is 0(n^2).
+b) 0(n^2) since it appears that there are two loops. One loop is nested within another. sum = 0 is 0(1) as well as sum += i and j *= 2. The for loop and while loop are 0(n) and 0(n) and multiplying them togther is 0(n^2).
 
 
 c) 0(n) since in this recursive function that would run n or bunnies times before it reaches a base case. Which makes this linear
