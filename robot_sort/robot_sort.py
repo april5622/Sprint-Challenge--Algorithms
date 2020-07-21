@@ -91,13 +91,55 @@ class SortingRobot:
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
+        
 
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # turning lights on is for the while loop to begin
+        # can use bubble sort 
+        # this will keep looping either two direction the robot goes, left or right
+        # is comparing two items.
+        # moving right, robot starts with nothing in hand to compare to greater value since 
+        # less value should begin with less, ascending its order going right
+        # moving left, robot starts with an item and comparing to item if its lesser value. The 
+        # greater item will be dropped, and order will descend. 
+
+        # setting the light on for while loop to start
+        self.set_light_on()
+        while self.light_is_on():
+            # but needs to turn off so robot can start moving
+            self.set_light_off()
+
+            # When the robot does moves right
+            while self.can_move_right():
+                self.move_right()
+                # it will compare item to the right its has a greater value which equals to 1
+                if self.compare_item() == 1:
+                    # if so, then swap it, dropping the lesser item down
+                    self.swap_item()
+                    # light is back for while to start
+                    self.set_light_on()
+           
+            # this for when the robot does move left
+            while self.can_move_left():
+                # pick up the item to compare to something of lesser value
+                self.swap_item()
+                # move to the left
+                self.move_left()
+                # and compare if the item is lesser value which equals to -1
+                if self.compare_item() == -1:
+                    # if it is, it'll swap, dropping the greater value item as it continues left
+                    self.swap_item()
+                    # light will turn back and it'll begin while loop again
+                    self.set_light_on()
+
+                # if not left, then it'll just go to the right and swap and go left
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+ 
 
 
 if __name__ == "__main__":
